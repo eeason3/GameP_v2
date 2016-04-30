@@ -1,10 +1,13 @@
 package helpers;
 
-import static helpers.Artist.LoadTexture;
 import static org.lwjgl.opengl.GL11.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
@@ -18,6 +21,7 @@ public class Artist {
 	public static final int WIDTH = 900, HEIGHT = 600;
 	public static int XOFFSET = 0, YOFFSET = 0;
 	public static Texture background;
+	public static Texture[] texturePack;
 	
 	public static void BeginSession(){
 		Display.setTitle("Game");
@@ -85,6 +89,19 @@ public class Artist {
 	}
 	
 	public static Texture QuickLoad(String Name){
-		return LoadTexture("res/"+Name+".png", "PNG");
+		return LoadTexture("src/res/Textures/"+Name+".png", "PNG");
+	}
+	
+	public static void LoadTexturePack(String file) {
+		try {
+			TextureHandler loader = new TextureHandler();
+			File xmlFile = new File("src/res/data/"+file+".xml");
+			SAXParserFactory factory = SAXParserFactory.newInstance();
+			SAXParser saxParser = factory.newSAXParser();
+			saxParser.parse(xmlFile, loader);
+			texturePack = loader.getTextures();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
