@@ -50,7 +50,12 @@ public class GameObject extends Sprite{
 			Draw(x + XOFFSET, y + YOFFSET);
 		}
 	}
-	
+
+	/**
+	 * Returns true if any part of the object can be seen on the display
+	 *
+	 * @return True if object is on display
+     */
 	public boolean OnScreen() {
 		return x + width + XOFFSET > 0 && x + XOFFSET < WIDTH
 				&& y + height + YOFFSET > 0 && y + YOFFSET < HEIGHT;

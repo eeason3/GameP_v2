@@ -22,7 +22,10 @@ public class Artist {
 	public static int XOFFSET = 0, YOFFSET = 0;
 	public static Texture background;
 	public static Texture[] texturePack;
-	
+
+	/**
+	 * Instantiate display
+	 */
 	public static void BeginSession(){
 		Display.setTitle("Game");
 		try {
@@ -40,11 +43,15 @@ public class Artist {
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
-	
-	/*public static void loadBackground(String name){
-		background = QuickLoad(name);
-	}*/
-	
+
+	/**
+	 * Draw quad to display
+	 *
+	 * @param x X position to draw to
+	 * @param y Y position to draw to
+	 * @param width Width of quad
+     * @param height Height of quad
+     */
 	public static void DrawQuad(int x, int y, int width, int height){
 		glBegin(GL_QUADS);
 		glVertex2f(x,y);
@@ -53,14 +60,31 @@ public class Artist {
 		glVertex2f(x, y+height);
 		glEnd();
 	}
-	
+
+	/**
+	 * Draw line between two points
+	 *
+	 * @param init_x X position of first point
+	 * @param init_y Y position of first point
+	 * @param fin_x X position of second point
+     * @param fin_y Y position of second point
+     */
 	public static void DrawLine(int init_x, int init_y, int fin_x, int fin_y){
 		glBegin(GL_LINES);
 		glVertex2f(init_x, init_y);
 		glVertex2f(fin_x, fin_y);
 		glEnd();
 	}
-	
+
+	/**
+	 * Draw a quad with a texture ot the screen
+	 *
+	 * @param texture Texture of quad
+	 * @param x X position
+	 * @param y Y position
+	 * @param width Width
+     * @param height Height
+     */
 	public static void DrawTexture(Texture texture, int x, int y, int width, int height){
 		texture.bind();
 		glTranslatef(x, y, 0);
@@ -76,7 +100,14 @@ public class Artist {
 		glEnd();
 		glLoadIdentity();
 	}
-	
+
+	/**
+	 * Load texture from an image file
+	 *
+	 * @param path Path to file
+	 * @param fileType Extension of file
+     * @return Texture object containing the image
+     */
 	public static Texture LoadTexture(String path, String fileType){
 		Texture tex = null;
 		InputStream in = ResourceLoader.getResourceAsStream(path);
@@ -87,11 +118,22 @@ public class Artist {
 		}
 		return tex;
 	}
-	
+
+	/**
+	 * Loads PNG image from res folder to texture
+	 *
+	 * @param Name Name of file in res folder
+	 * @return Texture object containing loaded image
+     */
 	public static Texture QuickLoad(String Name){
 		return LoadTexture("src/res/Textures/"+Name+".png", "PNG");
 	}
-	
+
+	/**
+	 * Loads all textures in XML file
+	 *
+	 * @param file XML file containing texture information
+     */
 	public static void LoadTexturePack(String file) {
 		try {
 			TextureHandler loader = new TextureHandler();
